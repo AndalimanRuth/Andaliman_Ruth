@@ -8,10 +8,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Tambahan CSS singkat untuk memastikan logo tampil rapi */
         .navbar-brand img {
-            border-radius: 100%; /* Membuat logo bulat jika gambar aslinya kotak */
+            border-radius: 100%;
             object-fit: cover;
+        }
+        /* Style Modal Alamat */
+        .custom-modal {
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); 
+            z-index: 9999;
+            justify-content: center; 
+            align-items: center;
+        }
+        .modal-body-card {
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px;
+            width: 90%; 
+            max-width: 450px; 
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            position: absolute; 
+            right: 20px; top: 15px;
+            font-size: 28px; cursor: pointer; color: #888;
         }
     </style>
 </head>
@@ -27,48 +50,71 @@
         </div>
     </nav>
 
-    <section class="hero-section">
+    <header class="hero-section">
         <div class="hero-overlay"></div>
         <div class="container text-center hero-content">
             <h1 class="display-3">Citarasa Autentik Toba</h1>
             <p>Bubuk Andaliman Premium dengan aroma jeruk yang segar dan getir yang khas.</p>
             <a href="#menu" class="btn btn-gold-light mt-4">Jelajahi Menu</a>
         </div>
-    </section>
+    </header>
 
     <section id="menu" class="py-5 bg-sage">
         <div class="container">
             <h2 class="text-center section-title mb-5">Menu Bubuk Andaliman</h2>
             <div class="row g-4 justify-content-center">
                 <div class="col-md-5 col-lg-4">
-                    <div class="card-premium">
+                    <div class="card-premium text-center">
                         <div class="badge-gold">Best Value</div>
                         <img src="50gr.png" alt="Andaliman Ruth 50gr" class="img-fluid mb-3 product-img">
                         <h3>50 Gram</h3>
                         <p>Pas untuk bumbu dapur harian keluarga.</p>
                         <div class="price">Rp 25.000</div>
-                        <button onclick="pesanProduk('Bubuk Andaliman 50gr', 25000)" class="btn btn-order-wa">Pesan via WhatsApp</button>
+                        <button onclick="bukaFormAlamat('Bubuk Andaliman 50gr', 25000)" class="btn btn-order-wa w-100">Pesan Sekarang</button>
                     </div>
                 </div>
                 <div class="col-md-5 col-lg-4">
-                    <div class="card-premium">
+                    <div class="card-premium text-center">
                         <div class="badge-gold">Hemat</div>
                         <img src="100gr.png" alt="Andaliman Ruth 100gr" class="img-fluid mb-3 product-img">
                         <h3>100 Gram</h3>
                         <p>Isi lebih banyak untuk stok masak besar.</p>
                         <div class="price">Rp 45.000</div>
-                        <button onclick="pesanProduk('Bubuk Andaliman 100gr', 45000)" class="btn btn-order-wa">Pesan via WhatsApp</button>
+                        <button onclick="bukaFormAlamat('Bubuk Andaliman 100gr', 45000)" class="btn btn-order-wa w-100">Pesan Sekarang</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <div id="checkoutModal" class="custom-modal">
+        <div class="modal-body-card">
+            <span class="close-btn" onclick="tutupFormAlamat()">&times;</span>
+            <h4 class="mb-3 text-success">📍 Detail Pengiriman</h4>
+            <p id="infoProduk" class="fw-bold text-secondary mb-4"></p>
+            
+            <div class="mb-3">
+                <label class="form-label small fw-bold">NAMA LENGKAP</label>
+                <input type="text" id="inputNama" class="form-control" placeholder="Contoh: Brando Mamahit">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label small fw-bold">ALAMAT LENGKAP</label>
+                <textarea id="inputAlamat" class="form-control" rows="3" placeholder="Nama Jalan, Kec, Kota/Kab"></textarea>
+            </div>
+
+            <button onclick="prosesKeWhatsApp()" class="btn btn-success w-100 py-2 fw-bold">
+                Kirim ke WhatsApp & Simpan
+            </button>
+        </div>
+    </div>
+
     <div id="historyModal" class="custom-modal">
-        <div class="modal-body">
+        <div class="modal-body-card">
             <span class="close-btn" onclick="closeHistory()">&times;</span>
-            <h4 class="mb-4">📋 Riwayat Pembelian Anda</h4>
-            <div id="historyList"></div>
+            <h4 class="mb-4">📋 Riwayat Pembelian</h4>
+            <div id="historyList" style="max-height: 300px; overflow-y: auto;">
+                </div>
         </div>
     </div>
 
